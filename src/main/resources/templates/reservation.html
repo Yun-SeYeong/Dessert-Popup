@@ -111,9 +111,10 @@
         </ul>
       </nav><!-- .navbar -->
 
-      <a class="btn-book-a-table" href="#book-a-table">예약</a>
-      <i class="mobile-nav-toggle mobile-nav-show bi bi-list"></i>
-      <i class="mobile-nav-toggle mobile-nav-hide d-none bi bi-x"></i>
+      <div class="right-header">
+        <i class="mobile-nav-toggle mobile-nav-show bi bi-list"></i>
+        <i class="mobile-nav-toggle mobile-nav-hide d-none bi bi-x"></i>
+      </div>
 
     </div>
   </header><!-- End Header -->
@@ -148,40 +149,34 @@
           <div class="col-lg-4 reservation-img" style="background-image: url(/assets/img/reservation.jpg);" data-aos="zoom-out" data-aos-delay="200"></div>
 
           <div class="col-lg-8 d-flex align-items-center reservation-form-bg">
-            <form action="/forms/book-a-table.php" method="post" role="form" class="php-email-form" data-aos="fade-up" data-aos-delay="100">
+            <form th:action="@{/reservation}" method="post" th:object="${reservation}" role="form" class="php-email-form" data-aos="fade-up" data-aos-delay="100">
               <div class="row gy-4">
                 <div class="form-group">
                   <label for="name">이름:</label>
-                  <input type="text" class="form-control" id="name" name="name" required>
+                  <input type="text" th:field="*{name}" class="form-control" id="name" name="name" required>
                 </div>
 
                 <div class="form-group">
                   <label for="phone">전화번호</label>
-                  <input type="tel" class="form-control" id="phone" name="phone" required>
+                  <input type="tel" th:field="*{phone}" class="form-control" id="phone" name="phone" required>
                 </div>
 
                 <div class="form-group">
                   <label for="reservationName">예약명 수</label>
-                  <input type="number" class="form-control" id="reservationName" name="reservationName" required>
+                  <input type="number" th:field="*{numberOfPeople}" class="form-control" id="reservationName" name="reservationName" required>
                 </div>
 
                 <div class="form-group">
                   <label for="reservationTime">예약 타임</label>
                   <select class="form-control" id="reservationTime" name="reservationTime" required>
-                    <option value="12:00">12:00</option>
-                    <option value="13:30">13:30</option>
-                    <option value="15:00">15:00</option>
-                    <option value="16:30">16:30</option>
-                    <option value="18:00">18:00</option>
-                    <option value="19:30">19:30</option>
+                    <option th:each="reservationTime : ${T(com.popup.dessert.dessertpopup.Dto.ReservationTime).values()}" th:value="${reservationTime}" th:text="${reservationTime.code}"></option>
                   </select>
                 </div>
 
                 <div class="form-group">
                   <label for="drink">음료</label>
                   <select class="form-control" id="drink" name="drink" required>
-                    <option value="자두에이드">자두에이드</option>
-                    <option value="콜드브루커피">콜드브루커피</option>
+                    <option th:each="drink : ${T(com.popup.dessert.dessertpopup.Dto.Drink).values()}" th:value="${drink}" th:text="${drink.code}"></option>
                   </select>
                 </div>
 
@@ -189,15 +184,10 @@
                   <div class="custom-checkbox-label">
                     <label>와인 페어링 유무(추가요금 15000원):</label>
                     <label class="custom-checkbox">
-                      <input type="checkbox" class="form-check-input" id="winePairing" name="winePairing">
+                      <input type="checkbox" class="form-check-input" id="winePairing" name="winePairing" th:field="*{winePairing}">
                       <span class="checkmark"></span>
                     </label>
                   </div>
-                </div>
-                <div class="mb-3">
-                  <div class="loading">Loading</div>
-                  <div class="error-message"></div>
-                  <div class="sent-message">Your booking request was sent. We will call back or send an Email to confirm your reservation. Thank you!</div>
                 </div>
                 <div class="text-center"><button type="submit">예약</button></div>
               </div>
@@ -289,7 +279,7 @@
   <script src="/assets/vendor/glightbox/js/glightbox.min.js"></script>
   <script src="/assets/vendor/purecounter/purecounter_vanilla.js"></script>
   <script src="/assets/vendor/swiper/swiper-bundle.min.js"></script>
-  <script src="/assets/vendor/php-email-form/validate.js"></script>
+<!--  <script src="/assets/vendor/php-email-form/validate.js"></script>-->
 
   <!-- Template Main JS File -->
   <script src="/assets/js/main.js"></script>
