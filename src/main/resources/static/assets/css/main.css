@@ -1219,7 +1219,6 @@ section {
 }
 
 .book-a-table .php-email-form .error-message {
-  display: none;
   color: #fff;
   background: #df1529;
   text-align: left;

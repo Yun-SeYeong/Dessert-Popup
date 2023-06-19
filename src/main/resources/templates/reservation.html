@@ -85,6 +85,13 @@
       border-width: 0 2px 2px 0;
       transform: rotate(45deg);
     }
+
+    .invalid-error-message {
+      color: red;
+      text-align: end;
+      margin-bottom: 0 !important;
+      font-weight: bold;
+    }
   </style>
 </head>
 
@@ -94,7 +101,7 @@
   <header id="header" class="header fixed-top d-flex align-items-center">
     <div class="container d-flex align-items-center justify-content-between">
 
-      <a href="index.html" class="logo d-flex align-items-center me-auto me-lg-0">
+      <a href="/" class="logo d-flex align-items-center me-auto me-lg-0">
         <!-- Uncomment the line below if you also wish to use an image logo -->
         <!-- <img src="/assets/img/logo.png" alt=""> -->
         <h1>DessertPopup<span>.</span></h1>
@@ -159,6 +166,7 @@
                 <div class="form-group">
                   <label for="phone">전화번호</label>
                   <input type="tel" th:field="*{phone}" class="form-control" id="phone" name="phone" required>
+                  <p th:if="${#fields.hasErrors('phone')}" class="invalid-error-message">전화번호를 확인해주세요 (010-xxxx-xxxx)</p>
                 </div>
 
                 <div class="form-group">
