@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<div id="reservation-table" th:fragment="reservation-table-fragment">
+  <div class="col-md-12 my-1 px-0">
+    <form>
+      <div class="d-flex flex-wrap col-md-12 my-2">
+        <div class="col-md-2 me-3">
+          <input class="form-control" type="search" placeholder="예약번호" aria-label="Search">
+        </div>
+        <div class="col-md-2 me-3">
+          <input class="form-control" type="search" placeholder="이름" aria-label="Search">
+        </div>
+        <div class="col-md-2 me-3">
+          <input class="form-control" type="search" placeholder="전화번호" aria-label="Search">
+        </div>
+        <div class="col-md-2 me-3">
+          <input class="form-control" type="number" placeholder="인원" aria-label="Search">
+        </div>
+      </div>
+      <div class="d-flex">
+        <div class="d-flex flex-wrap flex-grow-1 my-2">
+          <div class="col-md-3 me-3 d-flex">
+            <span class="input-group-text">예약시간</span>
+            <select class="form-select me-3" aria-label="Category"
+                    aria-describedby="search-category">
+              <option>선택</option>
+              <option
+                  th:each="reservationTime : ${T(com.popup.dessert.dessertpopup.Dto.ReservationTime).values()}"
+                  th:value="${reservationTime}" th:text="${reservationTime.code}"></option>
+            </select>
+          </div>
+          <div class="col-md-3 me-3 d-flex">
+            <span class="input-group-text">음료</span>
+            <select class="form-select" aria-label="Category"
+                    aria-describedby="search-category">
+              <option>선택</option>
+              <option th:each="drink : ${T(com.popup.dessert.dessertpopup.Dto.Drink).values()}"
+                      th:value="${drink}" th:text="${drink.code}"></option>
+            </select>
+          </div>
+          <div class="col-md-2 me-3 d-flex">
+            <span class="input-group-text">와인 페어링</span>
+            <select class="form-select" aria-label="Category"
+                    aria-describedby="search-category">
+              <option>선택</option>
+              <option>o</option>
+              <option>x</option>
+            </select>
+          </div>
+          <div class="col-md-2 me-3 d-flex">
+            <span class="input-group-text">예약 완료</span>
+            <select class="form-select me-3" aria-label="Category"
+                    aria-describedby="search-category">
+              <option>선택</option>
+              <option>o</option>
+              <option>x</option>
+            </select>
+          </div>
+        </div>
+        <button class="btn btn-red my-2" type="submit">검색</button>
+      </div>
+    </form>
+  </div>
+  <div th:if="${reservations}">
+    <table class="table table-striped reservation-table shadow-panel">
+      <thead>
+      <tr>
+        <th class="text-center">에약번호</th>
+        <th class="text-center">이름</th>
+        <th class="text-center">전화번호</th>
+        <th class="text-center">인원</th>
+        <th class="text-center">에약시간</th>
+        <th class="text-center">음료</th>
+        <th class="text-center">와인 페어링</th>
+        <th class="text-center">최종 완료</th>
+      </tr>
+      </thead>
+      <tbody>
+      <!--/*@thymesVar id="reservation" type="com.popup.dessert.dessertpopup.Dto.ReservationResponse"*/-->
+      <tr th:each="reservation : ${reservations.content}">
+        <td class="text-center" th:text="${reservation.reservationNumber}"></td>
+        <td class="text-center" th:text="${reservation.name}"></td>
+        <td class="text-center" th:text="${reservation.phone}"></td>
+        <td class="text-center" th:text="${reservation.numberOfPeople}"></td>
+        <td class="text-center" th:text="${reservation.reservationTime.code}"></td>
+        <td class="text-center" th:text="${reservation.drink.code}"></td>
+        <td class="text-center">
+          <span th:if="${reservation.winePairing}">O</span>
+          <span th:if="${!reservation.winePairing}">X</span>
+        </td>
+        <td class="text-center" >
+          <span th:if="${reservation.complete}">확정됨</span>
+          <span th:if="${!reservation.complete}">
+            <button
+                th:onclick="completeReservation([[${reservation.id}]], [[${reservations.size}]], [[${reservations.number + 1}]])"
+                class="btn btn-red" type="submit">
+              확정
+            </button>
+          </span>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+    <div class="d-flex justify-content-center">
+
+      <button
+          th:if="${reservations.hasPrevious()}"
+          th:onclick="loadPage([[${reservations.size}]], [[${reservations.number}]])"
+          class="page-link" aria-label="Previous">
+        <span aria-hidden="true"><</span>
+      </button>
+
+      <div
+          th:if="${reservations.totalPages > 0}" class="m-2"
+          th:each="pageNumber : ${pageNumbers}">
+        <button
+            class="page-link"
+            th:onclick="loadPage([[${reservations.size}]], [[${pageNumber}]])"
+            th:style="${pageNumber==reservations.number + 1} ? 'color:var(--color-primary); font-weight: bold' : 'color: #000'">
+          <span th:text="${pageNumber}"></span>
+        </button>
+      </div>
+
+      <button
+          th:if="${reservations.hasNext()}"
+          th:onclick="loadPage([[${reservations.size}]], [[${reservations.number + 2}]])"
+          class="page-link m-2" aria-label="Next">
+        <span aria-hidden="true">></span>
+      </button>
+    </div>
+  </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+
+<script th:inline="javascript">
+  window.onload = function () {
+    loadPage(10, 1)
+  }
+
+  function loadPage(size, page) {
+    $.ajax(
+        {
+          type: "GET",
+          url: "/admin/reservation-table?size=" + size + "&page=" + page,
+        }
+    ).done(function (result) {
+      $("#reservation-table").replaceWith(result);
+    })
+
+  }
+
+  function completeReservation(id, size, page) {
+    $.ajax(
+        {
+          type: "POST",
+          url: "/admin/reservation/complete?id=" + id
+        }
+    ).done(function () {
+      loadPage(size, page)
+      loadPanel()
+    })
+  }
+</script>
+
+
+</html>

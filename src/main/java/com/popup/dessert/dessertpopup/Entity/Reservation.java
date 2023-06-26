@@ -51,4 +51,8 @@ public class Reservation {
   public String getCode() {
     return String.valueOf(this.CODE + this.id);
   }
+
+  public void complete() {
+    this.complete = true;
+  }
 }

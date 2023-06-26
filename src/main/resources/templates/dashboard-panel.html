@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<div class="row" id="dashboard-panel" th:fragment="dashboard-panel-fragment">
+  <div class="col-lg-3 col-md-6">
+    <div class="card shadow-panel border-0">
+      <div class="card-body">
+        <h4 class="card-title text-title-panel">예약수</h4>
+        <h1 class="card-text text-end text-panel" th:text="${totalReservation}"></h1>
+      </div>
+    </div>
+  </div>
+  <div class="col-lg-3 col-md-6">
+    <div class="card shadow-panel border-0">
+      <div class="card-body">
+        <h4 class="card-title text-title-panel">인원수</h4>
+        <h1 class="card-text text-end text-panel" th:text="${peopleTotal}"></h1>
+      </div>
+    </div>
+  </div>
+  <div class="col-lg-3 col-md-6">
+    <div class="card shadow-panel border-0">
+      <div class="card-body">
+        <h4 class="card-title text-title-panel">예약 미완료</h4>
+        <h1 class="card-text text-end text-panel" th:text="${notCompleteTotal}"></h1>
+      </div>
+    </div>
+  </div>
+  <div class="col-lg-3 col-md-6">
+    <div class="card shadow-panel border-0">
+      <div class="card-body">
+        <h4 class="card-title text-title-panel">예약 완료</h4>
+        <h1 class="card-text text-end text-panel" th:text="${completeTotal}"></h1>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+
+<script th:inline="javascript">
+  $(document).ready(function () {
+    loadPanel()
+  })
+
+  function loadPanel() {
+    $.ajax(
+        {
+          type: "GET",
+          url: "/admin/metric-panel",
+        }
+    ).done(function (result) {
+      $("#dashboard-panel").replaceWith(result);
+    })
+
+  }
+</script>
+
+</html>

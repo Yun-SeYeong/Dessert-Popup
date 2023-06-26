@@ -1,13 +1,17 @@
-package com.popup.dessert.dessertpopup.service;
+package com.popup.dessert.dessertpopup.Service;
 
 import com.popup.dessert.dessertpopup.Dto.ReservationRequest;
 import com.popup.dessert.dessertpopup.Dto.ReservationResponse;
 import com.popup.dessert.dessertpopup.Entity.Reservation;
-import com.popup.dessert.dessertpopup.respository.ReservationRepository;
+import com.popup.dessert.dessertpopup.Respository.ReservationRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
+@Transactional
 @RequiredArgsConstructor
 public class ReservationService {
 
@@ -17,16 +21,28 @@ public class ReservationService {
     return getReservationResponse(reservationRepository.save(getReservation(reservationRequest)));
   }
 
-  public ReservationResponse getReservation(String phone) throws Exception {
+  public ReservationResponse getReservationByPhone(String phone) throws Exception {
     return getReservationResponse(
         reservationRepository.findByPhone(phone)
             .orElseThrow(() -> new Exception("Cannot find reservation."))
     );
   }
 
+  public Page<ReservationResponse> getReservationWithPaging(Pageable pageable) {
+    return reservationRepository.findAll(pageable)
+        .map(this::getReservationResponse);
+  }
 
-  private static ReservationResponse getReservationResponse(Reservation reservation) {
+  public void completeReservation(Long id) throws Exception {
+    Reservation reservation = reservationRepository.findById(id)
+        .orElseThrow(() -> new Exception("reservation is not exists"));
+
+    reservation.complete();
+  }
+
+  private ReservationResponse getReservationResponse(Reservation reservation) {
     return new ReservationResponse(
+        reservation.getId(),
         reservation.getCode(),
         reservation.getName(),
         reservation.getPhone(),

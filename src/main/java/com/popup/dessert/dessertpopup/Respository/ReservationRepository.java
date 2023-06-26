@@ -1,4 +1,4 @@
-package com.popup.dessert.dessertpopup.respository;
+package com.popup.dessert.dessertpopup.Respository;
 
 import com.popup.dessert.dessertpopup.Entity.Reservation;
 import java.util.Optional;

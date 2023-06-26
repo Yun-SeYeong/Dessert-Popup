@@ -2,7 +2,7 @@ package com.popup.dessert.dessertpopup.Controller;
 
 import com.popup.dessert.dessertpopup.Dto.ReservationRequest;
 import com.popup.dessert.dessertpopup.Dto.ReservationResponse;
-import com.popup.dessert.dessertpopup.service.ReservationService;
+import com.popup.dessert.dessertpopup.Service.ReservationService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;

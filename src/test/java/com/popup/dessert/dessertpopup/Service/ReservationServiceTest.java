@@ -1,15 +1,12 @@
-package com.popup.dessert.dessertpopup.service;
+package com.popup.dessert.dessertpopup.Service;
 
 import com.popup.dessert.dessertpopup.Dto.Drink;
 import com.popup.dessert.dessertpopup.Dto.ReservationRequest;
 import com.popup.dessert.dessertpopup.Dto.ReservationResponse;
 import com.popup.dessert.dessertpopup.Dto.ReservationTime;
-import com.popup.dessert.dessertpopup.respository.ReservationRepository;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
