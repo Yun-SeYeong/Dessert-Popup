@@ -6,6 +6,7 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Encoders;
 import io.jsonwebtoken.security.Keys;
+import io.jsonwebtoken.security.SignatureException;
 import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.Collection;
@@ -79,4 +80,31 @@ public class JwtTokenProvider {
 
     return new UsernamePasswordAuthenticationToken(userDetails, "", authorities);
   }
+
+  public String generateSMSToken(String phone, String code) {
+    SecretKey secretKey = Keys.hmacShaKeyFor((SECRET_KEY + code).getBytes(StandardCharsets.UTF_8));
+
+    Date accessExpiredDate = new Date(new Date().getTime() + 3 * 60 * 1000);
+
+    String accessToken = Jwts.builder()
+        .claim("phone", phone)
+        .setExpiration(accessExpiredDate)
+        .signWith(secretKey)
+        .compact();
+
+    return "Bearer " + accessToken;
+  }
+
+  public Boolean checkSMSToken(String phone, String code, String accessToken) throws SignatureException {
+    Claims claims = Jwts
+        .parserBuilder()
+        .setSigningKey(Encoders.BASE64.encode((SECRET_KEY + code).getBytes(StandardCharsets.UTF_8)))
+        .build()
+        .parseClaimsJws(accessToken)
+        .getBody();
+
+    return claims.get("phone").equals(phone);
+  }
+
+
 }

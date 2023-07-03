@@ -140,76 +140,7 @@
     </div>
   </div><!-- End Breadcrumbs -->
 
-  <section th:if="${reservationExists}" id="book-a-table" class="book-a-table">
-    <div class="container" data-aos="fade-up">
-
-      <div class="section-header">
-        <p>예약 확인<span>.</span></p><br>
-        <div class="d-flex justify-content-center">
-          <h3>
-            아래 계좌로 입금이 완료되면 예약이 확정됩니다.<br><br>
-            <span style="color: var(--color-primary);">카카오뱅크 3333180712814 윤세원</span><br><br>
-            만약 입금 후 24시간 안에 확정되지 않을 경우<br>010-2719-3350으로 문의 부탁드립니다.<br>
-          </h3>
-        </div>
-      </div>
-
-      <!--/*@thymesVar id="reservation" type="com.popup.dessert.dessertpopup.Dto.ReservationResponse"*/-->
-      <div class="d-flex justify-content-center">
-        <table class="table table-striped reservation-table">
-          <tbody>
-          <tr>
-            <th scope="row" class="text-center">예약번호</th>
-            <td id="reservationNumber" th:text="${reservation.getReservationNumber()}"></td>
-          </tr>
-          <tr>
-            <th scope="row" class="text-center">가격</th>
-            <td id="price" th:text="${reservation.getPrice()} + '원'"></td>
-          </tr>
-          <tr>
-            <th scope="row" class="text-center">이름</th>
-            <td id="name" th:text="${reservation.getName()}"></td>
-          </tr>
-          <tr>
-            <th scope="row" class="text-center">전화번호</th>
-            <td id="phone" th:text="${reservation.getPhone()}"></td>
-          </tr>
-          <tr>
-            <th scope="row" class="text-center">인원 수</th>
-            <td id="numberOfPeople" th:text="${reservation.getNumberOfPeople()}"></td>
-          </tr>
-          <tr>
-            <th scope="row" class="text-center">예약 시간</th>
-            <td id="reservationTime" th:text="${reservation.getReservationTime().getCode()}"></td>
-          </tr>
-          <tr>
-            <th scope="row" class="text-center">자두에이드</th>
-            <td id="numberOfDrink1" th:text="${reservation.getNumberOfDrink1()}"></td>
-          </tr>
-          <tr>
-            <th scope="row" class="text-center">콜드브루커피</th>
-            <td id="numberOfDrink2" th:text="${reservation.getNumberOfDrink2()}"></td>
-          </tr>
-          <tr>
-            <th scope="row" class="text-center">와인 페어링</th>
-            <td id="winePairing">
-              <span th:if="${reservation.getWinePairing()}">O</span>
-              <span th:if="${!reservation.getWinePairing()}">X</span>
-            </td>
-          </tr>
-          <tr>
-            <th scope="row" class="text-center">확정</th>
-            <td id="complete">
-              <span th:if="${reservation.getComplete()}">O</span>
-              <span th:if="${!reservation.getComplete()}">X</span>
-            </td>
-          </tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-  </section>
-  <section th:if="${!reservationExists}" class="book-a-table">
+  <section th:if="${reservation}" id="book-a-table" class="book-a-table">
     <div class="container" data-aos="fade-up">
 
       <div class="section-header">
@@ -220,6 +151,7 @@
           </h3>
         </div>
       </div>
+
     </div>
   </section>
 </main>

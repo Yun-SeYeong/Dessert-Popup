@@ -34,7 +34,7 @@ public class JwtFilter extends GenericFilterBean {
     chain.doFilter(request, response);
   }
 
-  private static String getToken(String authorization) {
+  public static String getToken(String authorization) {
     String token = null;
 
     if (StringUtils.isNotEmpty(authorization) && authorization.startsWith("Bearer ")) {

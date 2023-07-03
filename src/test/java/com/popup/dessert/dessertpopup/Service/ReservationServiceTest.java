@@ -25,7 +25,8 @@ class ReservationServiceTest {
         "010-0000-0000",
         1L,
         ReservationTime.H15M00,
-        Drink.ADE,
+        0L,
+        0L,
         true
     );
     // when

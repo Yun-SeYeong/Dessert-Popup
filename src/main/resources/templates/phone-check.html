@@ -147,8 +147,8 @@
       <div class="container" data-aos="fade-up">
 
         <div class="section-header">
-          <h2>Book A Table</h2>
-          <p>Book <span>Your Stay</span> With Us</p>
+          <h2>Check A Reservation</h2>
+          <p>전화번호 확인</p>
         </div>
 
         <div class="row g-0">
@@ -156,55 +156,68 @@
           <div class="col-lg-4 reservation-img" style="background-image: url(/assets/img/reservation.jpg);" data-aos="zoom-out" data-aos-delay="200"></div>
 
           <div class="col-lg-8 d-flex align-items-center reservation-form-bg">
-            <form th:action="@{/reservation}" method="post" th:object="${reservation}" role="form" class="php-email-form" data-aos="fade-up" data-aos-delay="100">
+            <form th:action="@{/phone-check}" method="post" th:object="${phoneCheckRequest}" role="form" class="php-email-form" data-aos="fade-up" data-aos-delay="100">
               <div class="row gy-4">
                 <div class="form-group">
-                  <label for="name">이름:</label>
-                  <input type="text" th:field="*{name}" class="form-control" id="name" name="name" required>
-                </div>
-
-                <div class="form-group">
                   <label for="phone">전화번호</label>
-                  <input type="tel" placeholder="010-1234-1234" th:field="*{phone}" class="form-control" id="phone" name="phone" required>
-                  <p th:if="${#fields.hasErrors('phone')}" class="invalid-error-message">전화번호를 확인해주세요 (010-xxxx-xxxx)</p>
+                  <input type="text" th:field="*{phone}" class="form-control" id="phone" name="phone" readonly>
                 </div>
 
                 <div class="form-group">
-                  <label>예약명 수</label>
-                  <input type="number" placeholder=1 th:field="*{numberOfPeople}" class="form-control" name="reservationName" min="1" required>
+                  <label for="code">코드:</label>
+                  <input type="text" th:field="*{code}" class="form-control" id="code" name="code" required>
+                  <p th:if="${#fields.hasErrors('code')}" class="invalid-error-message">코드를 확인해 주세요</p>
                 </div>
 
-                <div class="form-group">
-                  <label for="reservationTime">예약 타임</label>
-                  <select class="form-control" id="reservationTime" name="reservationTime" required>
-                    <option th:each="reservationTime : ${T(com.popup.dessert.dessertpopup.Dto.ReservationTime).values()}" th:value="${reservationTime}" th:text="${reservationTime.code}"></option>
-                  </select>
-                </div>
+                <div class="d-none">
+                  <div class="form-group">
+                    <label for="name">이름:</label>
+                    <input type="text" th:field="*{name}" class="form-control" id="name" name="name" required>
+                  </div>
 
-                <div class="form-group">
-                  <label>자두에이드</label>
-                  <input type="number" placeholder=0 th:field="*{numberOfDrink1}" class="form-control" name="reservationName" required>
-                </div>
+                  <div class="form-group">
+                    <label>예약명 수</label>
+                    <input type="number" placeholder=0 th:field="*{numberOfPeople}" class="form-control" name="reservationName" required>
+                  </div>
 
-                <div class="form-group">
-                  <label>콜드브루커피</label>
-                  <input type="number" placeholder=0 th:field="*{numberOfDrink2}" class="form-control" name="reservationName" required>
-                </div>
+                  <div class="form-group">
+                    <label for="reservationTime">예약 타임</label>
+                    <select class="form-control" id="reservationTime" name="reservationTime" required>
+                      <option th:each="reservationTime : ${T(com.popup.dessert.dessertpopup.Dto.ReservationTime).values()}" th:value="${reservationTime}" th:text="${reservationTime.code}"></option>
+                    </select>
+                  </div>
 
-                <div class="form-group">
-                  <div class="custom-checkbox-label">
-                    <label>와인 페어링 유무(추가요금 15000원):</label>
-                    <label class="custom-checkbox">
-                      <input type="checkbox" class="form-check-input" id="winePairing" name="winePairing" th:field="*{winePairing}">
-                      <span class="checkmark"></span>
-                    </label>
+                  <div class="form-group">
+                    <label>자두에이드</label>
+                    <input type="number" placeholder=0 th:field="*{numberOfDrink1}" class="form-control" name="reservationName" required>
+                  </div>
+
+                  <div class="form-group">
+                    <label>콜드브루커피</label>
+                    <input type="number" placeholder=0 th:field="*{numberOfDrink2}" class="form-control" name="reservationName" required>
+                  </div>
+
+                  <div class="form-group">
+                    <div class="custom-checkbox-label">
+                      <label>와인 페어링 유무(추가요금 15000원):</label>
+                      <label class="custom-checkbox">
+                        <input type="checkbox" class="form-check-input" id="winePairing" name="winePairing" th:field="*{winePairing}">
+                        <span class="checkmark"></span>
+                      </label>
+                    </div>
                   </div>
                 </div>
-                <div class="text-center"><button type="submit">예약</button></div>
+
+                <input type="text" th:field="*{token}" class="d-none" id="token" name="code" required>
+
+                <div class="text-center"><button type="submit">예약확인</button></div>
               </div>
+
             </form>
           </div><!-- End Reservation Form -->
+
         </div>
+
       </div>
     </section><!-- End Book A Table Section -->
   </main>

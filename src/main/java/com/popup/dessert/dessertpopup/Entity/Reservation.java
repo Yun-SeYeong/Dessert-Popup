@@ -1,7 +1,7 @@
 package com.popup.dessert.dessertpopup.Entity;
 
-import com.popup.dessert.dessertpopup.Dto.Drink;
 import com.popup.dessert.dessertpopup.Dto.ReservationTime;
+import java.util.Random;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -18,41 +18,45 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Reservation {
 
-  private final long CODE = 84932L;
-
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   @Column(name = "reservation_id")
   private Long id;
 
+  private String code;
   private String name;
   @Column(unique = true)
   private String phone;
   private Long numberOfPeople;
   @Enumerated(value = EnumType.STRING)
   private ReservationTime reservationTime;
-  @Enumerated(value = EnumType.STRING)
-  private Drink drink;
+  private Long numberOfDrink1;
+  private Long numberOfDrink2;
   private Boolean winePairing;
   private Boolean complete;
 
   public Reservation(String name, String phone, Long numberOfPeople,
       ReservationTime reservationTime,
-      Drink drink, Boolean winePairing) {
+      Long numberOfDrink1, Long numberOfDrink2, Boolean winePairing) {
     this.name = name;
     this.phone = phone;
     this.numberOfPeople = numberOfPeople;
     this.reservationTime = reservationTime;
-    this.drink = drink;
+    this.numberOfDrink1 = numberOfDrink1;
+    this.numberOfDrink2 = numberOfDrink2;
     this.winePairing = winePairing;
     this.complete = false;
   }
 
-  public String getCode() {
-    return String.valueOf(this.CODE + this.id);
+  public void generateCode() {
+    this.code = getRandom() + getRandom() + getRandom() + this.id;
   }
 
-  public void complete() {
-    this.complete = true;
+  private String getRandom() {
+    return String.valueOf(new Random().nextInt(9) + 1);
+  }
+
+  public void convertComplete() {
+    this.complete = !this.complete;
   }
 }

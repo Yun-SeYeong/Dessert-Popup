@@ -4,6 +4,6 @@ import com.popup.dessert.dessertpopup.Entity.Reservation;
 import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface ReservationRepository extends JpaRepository<Reservation, Long> {
-  Optional<Reservation> findByPhone(String phone);
+public interface ReservationRepository extends JpaRepository<Reservation, Long>, ReservationRepositoryCustom {
+  Optional<Reservation> findByCodeAndNameAndPhone(String code, String name, String phone);
 }

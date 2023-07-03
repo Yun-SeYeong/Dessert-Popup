@@ -1,6 +1,7 @@
 package com.popup.dessert.dessertpopup.Controller;
 
 import com.popup.dessert.dessertpopup.Dto.ReservationResponse;
+import com.popup.dessert.dessertpopup.Dto.ReservationSearchCondition;
 import com.popup.dessert.dessertpopup.Service.ReservationService;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -28,18 +29,21 @@ public class AdminController {
   private final ReservationService reservationService;
 
   @GetMapping
-  public String index(Model model) {
+  public String index() {
     return "admin";
   }
 
   @GetMapping("/reservation-table")
   public String reservationTable(
+      ReservationSearchCondition condition,
       @RequestParam(value = "page", defaultValue = "1", required = false) int page,
       @RequestParam(value = "size", defaultValue = "15", required = false) int size,
       Model model
   ) {
-    Page<ReservationResponse> reservations = reservationService.getReservationWithPaging(
-        PageRequest.of(page - 1, size));
+    Page<ReservationResponse> reservations = reservationService.search(
+        condition,
+        PageRequest.of(page - 1, size)
+    );
     model.addAttribute("reservations", reservations);
 
     int totalPages = reservations.getTotalPages();
@@ -50,7 +54,7 @@ public class AdminController {
       model.addAttribute("pageNumbers", pageNumbers);
     }
 
-    return "reservation-table";
+    return "reservation-table :: reservation-table-fragment";
   }
 
   @GetMapping("/metric-panel")
@@ -66,6 +70,7 @@ public class AdminController {
     model.addAttribute("totalReservation", reservations.getTotalElements());
 
     long peopleTotal = reservations.stream()
+        .filter(ReservationResponse::getComplete)
         .map(ReservationResponse::getNumberOfPeople)
         .mapToLong(i -> i)
         .sum();

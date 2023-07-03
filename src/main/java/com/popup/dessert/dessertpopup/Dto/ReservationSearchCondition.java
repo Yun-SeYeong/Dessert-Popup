@@ -1,22 +1,21 @@
 package com.popup.dessert.dessertpopup.Dto;
 
+import com.popup.dessert.dessertpopup.Entity.Reservation;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.data.domain.Page;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class ReservationResponse {
-  private Long id;
+public class ReservationSearchCondition {
   private String reservationNumber;
   private String name;
   private String phone;
-  private Long numberOfPeople;
   private ReservationTime reservationTime;
-  private Long numberOfDrink1;
-  private Long numberOfDrink2;
   private Boolean winePairing;
   private Boolean complete;
-  private Long price;
 }
