@@ -5,11 +5,10 @@ spring:
 
   thymeleaf:
     cache: false
-
-#  h2:
-#    console:
-#      enabled: true
-#      path: /h2-console
+    enabled: true
+    prefix: classpath:/templates/
+    check-template-location: true
+    suffix: .html
 
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
