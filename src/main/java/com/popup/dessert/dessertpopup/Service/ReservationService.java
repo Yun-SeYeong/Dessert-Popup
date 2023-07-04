@@ -84,6 +84,7 @@ public class ReservationService {
 
   public String generateSMSToken(String phone) {
     String code = String.format("%04d", (int) (Math.random() * 10000));
+    System.out.println("code = " + code);
     String token = jwtTokenProvider.generateSMSToken(phone, code);
     smsService.publishSMS(phone.replaceAll("-", ""), code);
     return token;
