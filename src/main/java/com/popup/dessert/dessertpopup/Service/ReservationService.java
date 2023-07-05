@@ -163,7 +163,7 @@ public class ReservationService {
         reservation.getNumberOfDrink2(),
         reservation.getWinePairing(),
         reservation.getComplete(),
-        reservation.getWinePairing() * 20000 + reservation.getNumberOfPeople() * 39000L
+        reservation.getWinePairing() * 15000L + reservation.getNumberOfPeople() * 39000L
     );
   }
 
