@@ -32,12 +32,12 @@ public class Reservation {
   private ReservationTime reservationTime;
   private Long numberOfDrink1;
   private Long numberOfDrink2;
-  private Boolean winePairing;
+  private Long winePairing;
   private Boolean complete;
 
   public Reservation(String name, String phone, Long numberOfPeople,
       ReservationTime reservationTime,
-      Long numberOfDrink1, Long numberOfDrink2, Boolean winePairing) {
+      Long numberOfDrink1, Long numberOfDrink2, Long winePairing) {
     this.name = name;
     this.phone = phone;
     this.numberOfPeople = numberOfPeople;

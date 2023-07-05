@@ -24,7 +24,6 @@ public class AdminConfig {
   private final UserRepository userRepository;
   private final PasswordEncoder passwordEncoder;
   private final ReservationService reservationService;
-  private final SnsClient snsClient;
 
   @PostConstruct
   private void init() {
@@ -41,7 +40,7 @@ public class AdminConfig {
         ReservationTime.D19H15M00,
         1L,
         2L,
-        false
+        1L
     ));
   }
 }

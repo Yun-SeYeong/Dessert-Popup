@@ -51,7 +51,6 @@ public class ReservationService {
             reservationRequest.getName(),
             reservationRequest.getPhone(),
             null,
-            null,
             null
         ),
         PageRequest.of(0, 1)
@@ -151,7 +150,7 @@ public class ReservationService {
         reservation.getNumberOfDrink2(),
         reservation.getWinePairing(),
         reservation.getComplete(),
-        reservation.getWinePairing() ? 39000L + 20000L : 39000L
+        reservation.getWinePairing() * 20000 + reservation.getNumberOfPeople() * 39000L
     );
   }
 

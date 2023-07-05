@@ -16,6 +16,5 @@ public class ReservationSearchCondition {
   private String name;
   private String phone;
   private ReservationTime reservationTime;
-  private Boolean winePairing;
   private Boolean complete;
 }

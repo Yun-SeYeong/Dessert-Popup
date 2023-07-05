@@ -100,7 +100,7 @@ public class PageController {
     );
 
     if (checkSMSToken) {
-      ReservationResponse reservation = null;
+      ReservationResponse reservation;
       try {
         reservation = reservationService.saveReservation(phoneCheckRequest);
       } catch (Exception e) {
@@ -131,9 +131,23 @@ public class PageController {
       Model model,
       RedirectAttributes attributes
   ) {
+    model.addAttribute("availableTimes", reservationService.getAvailableReservationTime());
+
     if (bindingResult.hasErrors()) {
       return "reservation";
     }
+
+    if (request.getNumberOfDrink1() + request.getNumberOfDrink2() > request.getNumberOfPeople()) {
+      bindingResult.addError(new FieldError("reservation", "numberOfDrink1", ""));
+      bindingResult.addError(new FieldError("reservation", "numberOfDrink2", ""));
+      return "reservation";
+    }
+
+    if (request.getWinePairing() > request.getNumberOfPeople()) {
+      bindingResult.addError(new FieldError("reservation", "winePairing", ""));
+      return "reservation";
+    }
+
     attributes.addFlashAttribute("reservation", request);
     return "redirect:/phone-check";
   }

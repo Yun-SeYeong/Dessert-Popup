@@ -143,11 +143,6 @@
                 </div>
 
                 <div class="form-group">
-                  <label>예약명 수</label>
-                  <input type="number" placeholder=1 th:field="*{numberOfPeople}" class="form-control" name="reservationName" min="1" required>
-                </div>
-
-                <div class="form-group">
                   <label for="reservationTime">예약 타임</label>
                   <select class="form-control" id="reservationTime" name="reservationTime" th:field="*{reservationTime}" required>
                     <option th:each="time : ${availableTimes}" th:value="${time}" th:text="${time.code}"></option>
@@ -156,21 +151,30 @@
                 </div>
 
                 <div class="form-group">
-                  <label>자두에이드</label>
-                  <input type="number" placeholder=0 th:field="*{numberOfDrink1}" class="form-control" name="reservationName" min="0" required>
+                  <label>예약명 수</label>
+                  <input type="number" placeholder=1 th:field="*{numberOfPeople}" class="form-control" name="reservationName" min="1" required>
+                </div>
+
+                <label>▼ 음료는 두가지 중 하나를 선택하실 수 있습니다. 인원에 맞추어 입력해주세요.</label>
+                <div class="form-group">
+                  <label>자두에이드 (개수)</label>
+                  <input type="number" placeholder=0 th:field="*{numberOfDrink1}" class="form-control" name="numberOfDrink1" min="0" required>
+                  <p th:if="${#fields.hasErrors('numberOfDrink1')}" class="invalid-error-message">예약 인원에 맞추어 주세요.</p>
                 </div>
 
                 <div class="form-group">
-                  <label>콜드브루커피</label>
-                  <input type="number" placeholder=0 th:field="*{numberOfDrink2}" class="form-control" name="reservationName" min="0" required>
+                  <label>콜드브루커피 (개수)</label>
+                  <input type="number" placeholder=0 th:field="*{numberOfDrink2}" class="form-control" name="numberOfDrink2" min="0" required>
+                  <p th:if="${#fields.hasErrors('numberOfDrink2')}" class="invalid-error-message">예약 인원에 맞추어 주세요.</p>
                 </div>
 
-                <div class="form-group d-flex justify-content-between px-3">
-                  <label class="form-check-label">
-                    와인 페어링 유무(추가요금 15000원):
-                  </label>
-                  <input class="form-check-input" type="checkbox" id="winePairing" name="winePairing" th:field="*{winePairing}" style="padding: 0; font-size: x-large;">
+                <label>▼ 와인 페어링은 추가요금이 발생합니다. (20000원)</label>
+                <div class="form-group">
+                  <label>와인 페어링 (개수)</label>
+                  <input type="number" placeholder=0 th:field="*{winePairing}" class="form-control" name="winePairing" min="0" required>
+                  <p th:if="${#fields.hasErrors('winePairing')}" class="invalid-error-message">예약 인원에 맞추어 주세요.</p>
                 </div>
+
 
                 <div class="form-group">
                   <label>개인 정보 수집 및 활용 동의</label>

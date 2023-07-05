@@ -16,7 +16,7 @@ public class ReservationResponse {
   private ReservationTime reservationTime;
   private Long numberOfDrink1;
   private Long numberOfDrink2;
-  private Boolean winePairing;
+  private Long winePairing;
   private Boolean complete;
   private Long price;
 }

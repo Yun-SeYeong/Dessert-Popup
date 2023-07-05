@@ -169,10 +169,7 @@
           </tr>
           <tr>
             <th scope="row" class="text-center">와인 페어링</th>
-            <td id="winePairing">
-              <span th:if="${reservation.getWinePairing()}">O</span>
-              <span th:if="${!reservation.getWinePairing()}">X</span>
-            </td>
+            <td id="winePairing" th:text="${reservation.getWinePairing()}"></td>
           </tr>
           <tr>
             <th scope="row" class="text-center">확정</th>

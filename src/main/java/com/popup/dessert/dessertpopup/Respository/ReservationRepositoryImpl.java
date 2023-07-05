@@ -32,7 +32,6 @@ public class ReservationRepositoryImpl implements ReservationRepositoryCustom {
             nameLike(condition.getName()),
             phoneLike(condition.getPhone()),
             reservationTimeEq(condition.getReservationTime()),
-            winePairingEq(condition.getWinePairing()),
             completeEq(condition.getComplete())
         )
         .offset(pageable.getOffset())
@@ -47,7 +46,6 @@ public class ReservationRepositoryImpl implements ReservationRepositoryCustom {
             nameLike(condition.getName()),
             phoneLike(condition.getPhone()),
             reservationTimeEq(condition.getReservationTime()),
-            winePairingEq(condition.getWinePairing()),
             completeEq(condition.getComplete())
         )
         .fetchFirst();
@@ -67,11 +65,6 @@ public class ReservationRepositoryImpl implements ReservationRepositoryCustom {
 
   private static Predicate completeEq(Boolean complete) {
     return complete != null ? reservation.complete.eq(complete) : null;
-  }
-
-  private static Predicate winePairingEq(Boolean winePairing) {
-    return winePairing != null ? reservation.winePairing.eq(
-        winePairing) : null;
   }
 
   private static Predicate reservationTimeEq(ReservationTime reservationTime) {

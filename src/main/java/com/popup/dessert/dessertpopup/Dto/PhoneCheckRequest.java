@@ -30,7 +30,7 @@ public class PhoneCheckRequest {
   @NotNull
   private Long numberOfDrink2;
   @NotNull
-  private Boolean winePairing;
+  private Long winePairing;
 
   public PhoneCheckRequest(String token, ReservationRequest reservationRequest) {
     this.token = token;

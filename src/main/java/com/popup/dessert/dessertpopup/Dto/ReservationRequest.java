@@ -24,5 +24,5 @@ public class ReservationRequest {
   @NotNull
   private Long numberOfDrink2 = 0L;
   @NotNull
-  private Boolean winePairing;
+  private Long winePairing = 0L;
 }

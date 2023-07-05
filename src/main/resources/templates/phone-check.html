@@ -171,13 +171,8 @@
                   </div>
 
                   <div class="form-group">
-                    <div class="custom-checkbox-label">
-                      <label>와인 페어링 유무(추가요금 15000원):</label>
-                      <label class="custom-checkbox">
-                        <input type="checkbox" class="form-check-input" id="winePairing" name="winePairing" th:field="*{winePairing}">
-                        <span class="checkmark"></span>
-                      </label>
-                    </div>
+                    <label>와인 페어링 (개수)</label>
+                    <input type="number" placeholder=0 th:field="*{winePairing}" class="form-control" name="winePairing" min="0" required>
                   </div>
                 </div>
 
