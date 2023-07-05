@@ -137,8 +137,8 @@
                 </div>
 
                 <div class="form-group">
-                  <label for="code">코드:</label>
-                  <input type="text" th:field="*{code}" class="form-control" id="code" name="code" required>
+                  <label for="code">문자 인증 코드:</label>
+                  <input type="text" placeholder="문자를 확인해주세요." th:field="*{code}" class="form-control" id="code" name="code" required>
                   <p th:if="${#fields.hasErrors('code')}" class="invalid-error-message">코드를 확인해 주세요</p>
                 </div>
 
@@ -155,7 +155,7 @@
 
                   <div class="form-group">
                     <label for="reservationTime">예약 타임</label>
-                    <select class="form-control" id="reservationTime" name="reservationTime" required>
+                    <select class="form-control" id="reservationTime" name="reservationTime" th:field="*{reservationTime}" required>
                       <option th:each="reservationTime : ${T(com.popup.dessert.dessertpopup.Dto.ReservationTime).values()}" th:value="${reservationTime}" th:text="${reservationTime.code}"></option>
                     </select>
                   </div>

@@ -149,20 +149,20 @@
 
                 <div class="form-group">
                   <label for="reservationTime">예약 타임</label>
-                  <select class="form-control" id="reservationTime" name="reservationTime" required>
-                    <option th:each="reservationTime : ${T(com.popup.dessert.dessertpopup.Dto.ReservationTime).values()}" th:value="${reservationTime}" th:text="${reservationTime.code}"></option>
+                  <select class="form-control" id="reservationTime" name="reservationTime" th:field="*{reservationTime}" required>
+                    <option th:each="time : ${availableTimes}" th:value="${time}" th:text="${time.code}"></option>
                   </select>
                   <p th:if="${#fields.hasErrors('reservationTime')}" class="invalid-error-message">예약시간을 변경해주세요.</p>
                 </div>
 
                 <div class="form-group">
                   <label>자두에이드</label>
-                  <input type="number" placeholder=0 th:field="*{numberOfDrink1}" class="form-control" name="reservationName" required>
+                  <input type="number" placeholder=0 th:field="*{numberOfDrink1}" class="form-control" name="reservationName" min="0" required>
                 </div>
 
                 <div class="form-group">
                   <label>콜드브루커피</label>
-                  <input type="number" placeholder=0 th:field="*{numberOfDrink2}" class="form-control" name="reservationName" required>
+                  <input type="number" placeholder=0 th:field="*{numberOfDrink2}" class="form-control" name="reservationName" min="0" required>
                 </div>
 
                 <div class="form-group d-flex justify-content-between px-3">

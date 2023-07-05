@@ -57,11 +57,12 @@ public class ReservationRepositoryImpl implements ReservationRepositoryCustom {
 
   @Override
   public Long countNumberOfPeople(ReservationTime reservationTime) {
-    return queryFactory
+    Long count = queryFactory
         .select(reservation.numberOfPeople.sum())
         .from(reservation)
         .where(reservation.reservationTime.eq(reservationTime))
         .fetchOne();
+    return count != null ? count : 0;
   }
 
   private static Predicate completeEq(Boolean complete) {

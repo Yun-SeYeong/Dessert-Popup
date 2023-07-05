@@ -4,11 +4,16 @@ import com.popup.dessert.dessertpopup.Dto.PhoneCheckRequest;
 import com.popup.dessert.dessertpopup.Dto.ReservationRequest;
 import com.popup.dessert.dessertpopup.Dto.ReservationResponse;
 import com.popup.dessert.dessertpopup.Dto.ReservationSearchCondition;
+import com.popup.dessert.dessertpopup.Dto.ReservationTime;
 import com.popup.dessert.dessertpopup.Entity.Reservation;
 import com.popup.dessert.dessertpopup.Respository.ReservationRepository;
 import com.popup.dessert.dessertpopup.filter.JwtFilter;
 import com.popup.dessert.dessertpopup.filter.JwtTokenProvider;
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -24,6 +29,7 @@ public class ReservationService {
   private final ReservationRepository reservationRepository;
   private final JwtTokenProvider jwtTokenProvider;
   private final SMSService smsService;
+  private final Long TIME_LIMIT = 15L;
 
   public ReservationResponse saveReservation(ReservationRequest reservationRequest) {
     Reservation reservation = reservationRepository.save(getReservation(reservationRequest));
@@ -33,9 +39,9 @@ public class ReservationService {
 
   public ReservationResponse saveReservation(PhoneCheckRequest reservationRequest)
       throws Exception {
-    Long countedNumberOfPeople = reservationRepository.countNumberOfPeople(reservationRequest.getReservationTime());
-    System.out.println("countedNumberOfPeople = " + countedNumberOfPeople);
-    if (countedNumberOfPeople + reservationRequest.getNumberOfPeople() > 15) {
+    Long countedNumberOfPeople = reservationRepository.countNumberOfPeople(
+        reservationRequest.getReservationTime());
+    if (countedNumberOfPeople + reservationRequest.getNumberOfPeople() > TIME_LIMIT) {
       throw new Exception("예약 가능 인원을 초과하였습니다.");
     }
 
@@ -58,6 +64,32 @@ public class ReservationService {
     Reservation reservation = reservationRepository.save(getReservation(reservationRequest));
     reservation.generateCode();
     return getReservationResponse(reservation);
+  }
+
+  public List<ReservationTime> getAvailableReservationTime() {
+    Map<ReservationTime, List<Reservation>> collect = reservationRepository.findAll()
+        .stream()
+        .collect(Collectors.groupingBy(Reservation::getReservationTime));
+
+    for (ReservationTime value : ReservationTime.values()) {
+      collect.put(value, collect.getOrDefault(value, new ArrayList<>()));
+    }
+
+    ArrayList<ReservationTime> result = new ArrayList<>();
+
+    collect.forEach((reservationTime, reservations) -> {
+      if (reservations.stream()
+          .map(Reservation::getNumberOfPeople)
+          .reduce(Long::sum)
+          .orElse(0L) < TIME_LIMIT
+      ) {
+        result.add(reservationTime);
+      }
+    });
+
+    return result.stream()
+        .sorted(Comparator.comparing(ReservationTime::getCode))
+        .collect(Collectors.toList());
   }
 
   public ReservationResponse findReservation(String code, String name, String phone) {

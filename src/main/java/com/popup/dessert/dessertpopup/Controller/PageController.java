@@ -35,6 +35,7 @@ public class PageController {
   @GetMapping("/reservation")
   public String reservationPage(Model model) {
     model.addAttribute("reservation", new ReservationRequest());
+    model.addAttribute("availableTimes", reservationService.getAvailableReservationTime());
     return "reservation";
   }
 
