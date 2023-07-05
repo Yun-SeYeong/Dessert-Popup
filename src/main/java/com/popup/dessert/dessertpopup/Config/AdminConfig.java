@@ -38,7 +38,7 @@ public class AdminConfig {
         "윤세영",
         "010-9628-3350",
         4L,
-        ReservationTime.H15M00,
+        ReservationTime.D19H15M00,
         1L,
         2L,
         false
