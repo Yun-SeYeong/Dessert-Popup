@@ -55,6 +55,15 @@ public class ReservationRepositoryImpl implements ReservationRepositoryCustom {
     return new PageImpl<>(fetch, pageable, count);
   }
 
+  @Override
+  public Long countNumberOfPeople(ReservationTime reservationTime) {
+    return queryFactory
+        .select(reservation.numberOfPeople.sum())
+        .from(reservation)
+        .where(reservation.reservationTime.eq(reservationTime))
+        .fetchOne();
+  }
+
   private static Predicate completeEq(Boolean complete) {
     return complete != null ? reservation.complete.eq(complete) : null;
   }

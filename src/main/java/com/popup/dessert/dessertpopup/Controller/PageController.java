@@ -38,6 +38,11 @@ public class PageController {
     return "reservation";
   }
 
+  @GetMapping("/reservation-fail")
+  public String reservationFailPage() {
+    return "reservation-fail";
+  }
+
   @GetMapping("/reservation-find")
   public String findReservationPage(Model model) {
     model.addAttribute("reservationFind", new ReservationFindRequest());
@@ -94,7 +99,12 @@ public class PageController {
     );
 
     if (checkSMSToken) {
-      ReservationResponse reservation = reservationService.saveReservation(phoneCheckRequest);
+      ReservationResponse reservation = null;
+      try {
+        reservation = reservationService.saveReservation(phoneCheckRequest);
+      } catch (Exception e) {
+        return "redirect:/reservation-fail";
+      }
       attributes.addFlashAttribute("reservation", reservation);
       return "redirect:/reservation-check";
     } else {

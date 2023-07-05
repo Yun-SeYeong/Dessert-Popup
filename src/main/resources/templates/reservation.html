@@ -152,6 +152,7 @@
                   <select class="form-control" id="reservationTime" name="reservationTime" required>
                     <option th:each="reservationTime : ${T(com.popup.dessert.dessertpopup.Dto.ReservationTime).values()}" th:value="${reservationTime}" th:text="${reservationTime.code}"></option>
                   </select>
+                  <p th:if="${#fields.hasErrors('reservationTime')}" class="invalid-error-message">예약시간을 변경해주세요.</p>
                 </div>
 
                 <div class="form-group">

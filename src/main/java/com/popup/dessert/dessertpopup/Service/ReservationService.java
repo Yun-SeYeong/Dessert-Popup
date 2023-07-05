@@ -31,7 +31,14 @@ public class ReservationService {
     return getReservationResponse(reservation);
   }
 
-  public ReservationResponse saveReservation(PhoneCheckRequest reservationRequest) {
+  public ReservationResponse saveReservation(PhoneCheckRequest reservationRequest)
+      throws Exception {
+    Long countedNumberOfPeople = reservationRepository.countNumberOfPeople(reservationRequest.getReservationTime());
+    System.out.println("countedNumberOfPeople = " + countedNumberOfPeople);
+    if (countedNumberOfPeople + reservationRequest.getNumberOfPeople() > 15) {
+      throw new Exception("예약 가능 인원을 초과하였습니다.");
+    }
+
     List<Reservation> content = reservationRepository.search(
         new ReservationSearchCondition(
             null,
