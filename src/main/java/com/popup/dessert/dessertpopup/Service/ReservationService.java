@@ -62,6 +62,15 @@ public class ReservationService {
 
     Reservation reservation = reservationRepository.save(getReservation(reservationRequest));
     reservation.generateCode();
+
+    smsService.publishSMS(
+        reservation.getPhone().replaceAll("-", ""),
+        "<예약 등록 완료>\n"
+            + "예약 번호: [" + reservation.getCode() + "]\n"
+            + "예약 시간: " + reservation.getReservationTime().getCode() + "\n"
+            + "위치: 서울 마포구 고산2길 6 1층"
+
+    );
     return getReservationResponse(reservation);
   }
 
@@ -120,11 +129,15 @@ public class ReservationService {
     reservation.convertComplete();
   }
 
+  public void deleteReservation(Long id) {
+    reservationRepository.deleteById(id);
+  }
+
   public String generateSMSToken(String phone) {
     String code = String.format("%04d", (int) (Math.random() * 10000));
     System.out.println("code = " + code);
     String token = jwtTokenProvider.generateSMSToken(phone, code);
-    smsService.publishSMS(phone.replaceAll("-", ""), code);
+    smsService.publishSMS(phone.replaceAll("-", ""), "code:[" + code + "]");
     return token;
   }
 

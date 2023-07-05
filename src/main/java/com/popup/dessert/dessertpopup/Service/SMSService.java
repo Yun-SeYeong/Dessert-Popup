@@ -12,12 +12,9 @@ public class SMSService {
 
   private final SnsClient snsClient;
 
-  public void publishSMS(String phone, String code) {
-    // given
-    String message = "code:[" + code + "]";
+  public void publishSMS(String phone, String message) {
     String phoneNumber = "+82" + phone;
 
-    // when
     PublishRequest publishRequest = PublishRequest.builder()
         .message(message)
         .phoneNumber(phoneNumber)

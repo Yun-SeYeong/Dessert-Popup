@@ -64,6 +64,7 @@
           <th class="text-center">콜드브루커피</th>
           <th class="text-center">와인 페어링</th>
           <th class="text-center">최종 완료</th>
+          <th class="text-center">삭제</th>
         </tr>
         </thead>
         <tbody>
@@ -93,6 +94,15 @@
               확정
             </button>
           </span>
+          </td>
+          <td class="text-center">
+            <span>
+              <button
+                  th:onclick="deleteReservation([[${reservation.id}]], [[${reservations.size}]], [[${reservations.number + 1}]])"
+                  class="btn btn-red-sm" type="submit">
+              X
+            </button>
+            </span>
           </td>
         </tr>
         </tbody>
@@ -160,6 +170,18 @@
         {
           type: "POST",
           url: "/admin/reservation/complete?id=" + id,
+        }
+    ).done(function () {
+      loadPage(size, page)
+      loadPanel()
+    })
+  }
+
+  function deleteReservation(id, size, page) {
+    $.ajax(
+        {
+          type: "DELETE",
+          url: "/admin/reservation?id=" + id,
         }
     ).done(function () {
       loadPage(size, page)

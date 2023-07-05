@@ -155,7 +155,7 @@
                   <input type="number" placeholder=1 th:field="*{numberOfPeople}" class="form-control" name="reservationName" min="1" required>
                 </div>
 
-                <label>▼ 음료는 두가지 중 하나를 선택하실 수 있습니다. 인원에 맞추어 입력해주세요.</label>
+                <label><span style="color: var(--color-primary)">▼</span> 음료는 두가지 중 하나를 선택하실 수 있습니다. 인원에 맞추어 입력해주세요.</label>
                 <div class="form-group">
                   <label>자두에이드 (개수)</label>
                   <input type="number" placeholder=0 th:field="*{numberOfDrink1}" class="form-control" name="numberOfDrink1" min="0" required>
@@ -168,7 +168,7 @@
                   <p th:if="${#fields.hasErrors('numberOfDrink2')}" class="invalid-error-message">예약 인원에 맞추어 주세요.</p>
                 </div>
 
-                <label>▼ 와인 페어링은 추가요금이 발생합니다. (20000원)</label>
+                <label><span style="color: var(--color-primary)">▼</span> 와인 페어링은 추가요금이 발생합니다. (20000원)</label>
                 <div class="form-group">
                   <label>와인 페어링 (개수)</label>
                   <input type="number" placeholder=0 th:field="*{winePairing}" class="form-control" name="winePairing" min="0" required>
