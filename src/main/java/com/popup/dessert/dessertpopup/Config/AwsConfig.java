@@ -28,7 +28,7 @@ public class AwsConfig {
   public AwsBasicCredentials awsBasicCredentials() {
     return AwsBasicCredentials.create(
         accessKey,
-        accessKey
+        secretKey
     );
   }
 }

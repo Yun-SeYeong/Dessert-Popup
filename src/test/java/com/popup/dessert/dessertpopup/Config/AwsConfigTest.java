@@ -22,7 +22,7 @@ class AwsConfigTest {
     // given
     String key = "Test";
     String value = "TestValue";
-    String snsArn = "arn:aws:sns:ap-northeast-1:190068804192:DessertPopup.fifo";
+    String snsArn = "arn:aws:iam::190068804192:user/Admin";
 
     // when
     TagResourceRequest tagResourceRequest = TagResourceRequest.builder()

@@ -24,10 +24,10 @@ class ReservationServiceTest {
         "가나다",
         "010-0000-0000",
         1L,
-        ReservationTime.H15M00,
+        ReservationTime.D19H15M00,
         0L,
         0L,
-        true
+        0L
     );
     // when
     ReservationResponse reservation = reservationService.saveReservation(request);
