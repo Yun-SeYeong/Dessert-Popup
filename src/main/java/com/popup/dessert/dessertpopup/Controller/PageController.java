@@ -137,7 +137,7 @@ public class PageController {
       return "reservation";
     }
 
-    if (request.getNumberOfDrink1() + request.getNumberOfDrink2() > request.getNumberOfPeople()) {
+    if (request.getNumberOfDrink1() + request.getNumberOfDrink2() != request.getNumberOfPeople()) {
       bindingResult.addError(new FieldError("reservation", "numberOfDrink1", ""));
       bindingResult.addError(new FieldError("reservation", "numberOfDrink2", ""));
       return "reservation";
