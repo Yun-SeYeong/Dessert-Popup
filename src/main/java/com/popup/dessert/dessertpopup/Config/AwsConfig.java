@@ -27,8 +27,8 @@ public class AwsConfig {
   @Bean
   public AwsBasicCredentials awsBasicCredentials() {
     return AwsBasicCredentials.create(
-        "AKIASYQH3ZJQF2T2UJ26",
-        "s8YuBUGsVU8WkEzv9NydBPg7fXMxwTK1aaKN+zKZ"
+        accessKey,
+        accessKey
     );
   }
 }
