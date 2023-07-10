@@ -27,20 +27,20 @@ public class AdminConfig {
 
   @PostConstruct
   private void init() {
-    userRepository.save(new Member(
-        "admin",
-        passwordEncoder.encode("admin"),
-        Collections.singletonList("ADMIN")
-    ));
-
-    reservationService.saveReservation(new ReservationRequest(
-        "윤세영",
-        "010-9628-3350",
-        4L,
-        ReservationTime.D19H15M00,
-        1L,
-        2L,
-        1L
-    ));
+//    userRepository.save(new Member(
+//        "admin",
+//        passwordEncoder.encode("admin"),
+//        Collections.singletonList("ADMIN")
+//    ));
+//
+//    reservationService.saveReservation(new ReservationRequest(
+//        "윤세영",
+//        "010-9628-3350",
+//        4L,
+//        ReservationTime.D19H15M00,
+//        1L,
+//        2L,
+//        1L
+//    ));
   }
 }
