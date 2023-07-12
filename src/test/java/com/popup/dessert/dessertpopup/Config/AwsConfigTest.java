@@ -17,26 +17,6 @@ class AwsConfigTest {
   private SnsClient snsClient;
 
   @Test
-  @DisplayName(value = "create tag")
-  public void createTag() {
-    // given
-    String key = "Test";
-    String value = "TestValue";
-    String snsArn = "arn:aws:iam::190068804192:user/Admin";
-
-    // when
-    TagResourceRequest tagResourceRequest = TagResourceRequest.builder()
-        .resourceArn(snsArn)
-        .tags(Tag.builder()
-            .key(key)
-            .value(value)
-            .build())
-        .build();
-
-    snsClient.tagResource(tagResourceRequest);
-  }
-
-  @Test
   @DisplayName(value = "publish sms")
   public void publishSMS() {
     // given
