@@ -6,12 +6,11 @@ spring:
   thymeleaf:
     cache: false
 
-  h2:
-    console:
-      enabled: true
-      path: /h2-console
-
   jpa:
     database-platform: org.hibernate.dialect.H2Dialect
     hibernate:
       ddl-auto: create
+
+  h2:
+    console:
+      enabled: true
