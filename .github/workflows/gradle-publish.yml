@@ -28,6 +28,15 @@ jobs:
         distribution: 'temurin'
         server-id: github # Value of the distributionManagement/repository/id field of the pom.xml
         settings-path: ${{ github.workspace }} # location for the settings.xml file
+        
+    - name: Create application-secret.yaml
+      env:
+        SECRET_DIR: src/main/resources
+        SECRET_TEST_DIR: src/test/resources
+        APPLICATION_SECRET: ${{ secrets.APPLICATION_SECRET }}
+      run: |
+        echo $APPLICATION_SECRET | base64 --decode > $SECRET_DIR/application-secret.yml &&
+        echo $APPLICATION_SECRET | base64 --decode > $SECRET_TEST_DIR/application-secret.yml
 
     - name: Build with Gradle
       uses: gradle/gradle-build-action@67421db6bd0bf253fb4bd25b31ebb98943c375e1
